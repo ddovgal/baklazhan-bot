@@ -1,0 +1,1 @@
+worker: ./mvnw clean package && java -jar ./target/baklazhan-bot-*.jar
