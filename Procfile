@@ -1,1 +1,1 @@
-worker: java -jar ./target/baklazhan-bot-*.jar
+worker: java $JAVA_OPTS -jar ./target/baklazhan-bot-*.jar
