@@ -88,8 +88,8 @@
 
     <repositories>
         <repository>
-            <id>central</id>
-            <name>bintray</name>
+            <id>sedmelluq</id>
+            <name>bintray-sedmelluq</name>
             <url>https://dl.bintray.com/sedmelluq/com.sedmelluq</url>
         </repository>
     </repositories>
