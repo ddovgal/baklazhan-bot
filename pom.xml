@@ -16,9 +16,38 @@
         <discord4j-core.version>3.1.5</discord4j-core.version>
         <lavaplayer.version>1.3.75</lavaplayer.version>
         <slf4j-api.version>1.7.30</slf4j-api.version>
-        <log4j-slf4j18-impl.version>2.14.1</log4j-slf4j18-impl.version>
+        <log4j-slf4j-impl.version>2.14.0</log4j-slf4j-impl.version>
         <lombok.version>1.18.16</lombok.version>
     </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.discord4j</groupId>
+            <artifactId>discord4j-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sedmelluq</groupId>
+            <artifactId>lavaplayer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!--region Logging-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+        </dependency>
+        <!--endregion-->
+
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -49,12 +78,20 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-slf4j18-impl</artifactId>
-                <version>${log4j-slf4j18-impl.version}</version>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j-slf4j-impl.version}</version>
             </dependency>
             <!--endregion-->
 
         </dependencies>
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/sedmelluq/com.sedmelluq</url>
+        </repository>
+    </repositories>
 
 </project>
