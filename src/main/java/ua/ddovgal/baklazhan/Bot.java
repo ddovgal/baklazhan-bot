@@ -1,6 +1,7 @@
 package ua.ddovgal.baklazhan;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.BiFunction;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -18,6 +19,7 @@ import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.entity.channel.VoiceChannel;
 import discord4j.voice.AudioProvider;
 import discord4j.voice.VoiceConnection;
@@ -55,7 +57,7 @@ public class Bot {
 
         // We will be creating LavaPlayerAudioProvider in the next step
         AudioProvider provider = new LavaPlayerAudioProvider(player);
-        TrackScheduler scheduler = new TrackScheduler(player);
+        TrackScheduler scheduler = new TrackScheduler(player, new ConcurrentLinkedQueue<>());
 
         Context context = new Context(playerManager, player, provider, scheduler);
         gateway.on(MessageCreateEvent.class).subscribe(event -> {
@@ -145,7 +147,22 @@ public class Bot {
             }
 
             context.getPlayer().stopTrack();
+            context.getScheduler().getQueue().clear();
             event.getGuild().flatMap(Guild::getVoiceConnection).flatMap(VoiceConnection::disconnect).block();
+
+            return true;
+        },
+        (event, context) -> {
+            Message message = event.getMessage();
+            if (!"!next".equals(message.getContent())) {
+                return false;
+            }
+
+            boolean hasNext = context.getScheduler().playNext();
+            if (!hasNext) {
+                MessageChannel channel = message.getChannel().block();
+                channel.createMessage("There is no next track").block();
+            }
 
             return true;
         }
