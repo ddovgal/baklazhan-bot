@@ -128,6 +128,7 @@ public class DefaultGuildPlaybackManager implements GuildPlaybackManager {
 
     @Override
     public void close() {
+        audioPlayer.stopTrack();
         cancelAutoDisconnectTask();
         audioManager.closeAudioConnection();
         audioManager.setSendingHandler(null);
